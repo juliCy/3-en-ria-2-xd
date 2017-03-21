@@ -14,10 +14,12 @@ public class Marcador {
     protected int victoriasA;
     protected int victoriasB;
     protected int empate;
-    protected UI_Juego ui;
+    private UI_Juego ui;
     
     public Marcador() {
-         this.ui = new UI_Juego();
+        victoriasA=0;
+        victoriasB=0;
+        empate=0;
     }
 
     public int getVictoriasA() {
@@ -28,8 +30,8 @@ public class Marcador {
         return victoriasB;
     }
     
-    public void mostrar(){ //Muestra el marcador actual por consola.
-        ui.actualizarMarcador();
+    public void mostrar(Jugador j){ //Muestra el marcador actual por consola.
+        ui.actualizarUIMarcador(j);
     }
     
     public void incrementarA(){ //Incrementa el marcador cada vez que termina una partida.

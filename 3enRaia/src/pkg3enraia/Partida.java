@@ -61,8 +61,9 @@ public class Partida {
         jugar();
     }
 
-    private void salir() { //Método para salir de la partida.       
-        ui.actualizarMarcador(jugadores[1]);
+    private void salir() { //Método para salir de la partida.      
+        ui = new UI_Juego();
+        ui.actualizarUIMarcador(jugadores[1]);
     }
 
     public boolean comprobarGanador(Jugador jugadorJ) { //Comprueba que jugador ha ganado; mirando las diagonales, verticales y horizontales. Despues de cada movimiento.       

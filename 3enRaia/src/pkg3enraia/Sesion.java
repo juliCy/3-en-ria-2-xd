@@ -20,98 +20,19 @@ public class Sesion {
     private UI_Juego ui;
     
     public Sesion() {
+        ui = new UI_Juego();
         iniciarSesion();
-        iniciarMenu();         
-    }
-
-    private String pedirNombre() { //pide el nombre del jugador normal
-        Scanner sc = new Scanner(System.in);  
-        System.out.println("Introduce el nombre del jugador: ");
-        return sc.nextLine(); //lee string
+        iniciarMenu();
+        marcador = new Marcador();
+        partida = new Partida(marcador, jugador, jugadorIA);        
     }
     
     private void iniciarSesion(){
-        System.out.println("|| ES UN 3 EN RAYA CONTRA LA IA ||");
-        System.out.println("-----------");
-        marcador = new Marcador();
-        ui = new UI_Juego();
-        jugador = new Jugador("|X|", pedirNombre()); // se pasan los parametros que hay en el constructor de jugador
-        System.out.println("-----------");    
+        ui.iniciarUISesion();         
     }
     
-    private void iniciarMenu() {
-        Scanner sc = new Scanner(System.in);       
-        boolean salir=true;   
-        int select;
-        
-        menu();
-        select = sc.nextInt();
-        switch(select){
-            case 1:
-                System.out.println("-----------");                
-                System.out.println("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
-                System.out.println("-----------");
-                jugadorIA = new JugadorIA("|O|", "IA"); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
-                partida = new Partida(marcador, jugador, jugadorIA);
-                partida.iniciar();
-                iniciarMenu();               
-                break;
-            case 2:               
-                System.out.println("-----------");
-                System.out.println("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
-                System.out.println("-----------");
-                jugadorIA = new IA1("|O|", "IA"); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
-                partida = new Partida(marcador, jugador, jugadorIA);
-                partida.iniciar();
-                iniciarMenu();               
-                break;
-            case 3:
-                System.out.println("-----------");
-                System.out.println("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
-                System.out.println("-----------");
-                jugadorIA = new IA2("|O|", "IA"); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
-                partida = new Partida(marcador, jugador, jugadorIA);
-                partida.iniciar();
-                iniciarMenu();               
-                break;
-            case 4:
-                System.out.println("-----------");
-                System.out.println("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
-                System.out.println("-----------");
-                jugadorIA = new IA3("|O|", "IA"); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
-                partida = new Partida(marcador, jugador, jugadorIA);
-                partida.iniciar();
-                iniciarMenu();               
-                break;
-            case 5:
-                System.out.println("-----------");
-                System.out.println("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
-                System.out.println("-----------");
-                jugadorIA = new IA4("|O|", "IA"); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
-                partida = new Partida(marcador, jugador, jugadorIA);
-                partida.iniciar();
-                iniciarMenu();               
-                break;
-            case 6:                 	
-                salir = false;          
-                break;
-            default:
-                System.out.println("-----------");
-                System.out.println("Mira bien lo que escribes");
-                System.out.println("-----------");
-                iniciarMenu();
-                break;
-        }                    
+    public void iniciarMenu() {
+        ui.iniciarUIMenu();                    
     }
     
-     private static void menu() {
-        System.out.println("Introduce la opción deseada");
-        System.out.println("-----------");
-        System.out.println("1. Nivel ultrafácil");
-        System.out.println("2. Nivel menos fácil");
-        System.out.println("3. Nivel menos fácil que el anterior");
-        System.out.println("4. Nivel 'A ver si puedes ganar XD'");
-        System.out.println("5. Nivel '0 probabilidad'");
-        System.out.println("6. Salir");
-    }
 }
