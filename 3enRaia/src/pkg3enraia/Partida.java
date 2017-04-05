@@ -17,14 +17,15 @@ public class Partida {
     private Jugador[] jugadores;
     private UI_Juego ui;
 
-    public Partida(Marcador marcador, Jugador jugadorJ, JugadorIA jugadorIA) { // pasamos los parametros necesarios para partida
-        this.tablero = new Tablero();
+    public Partida(Marcador marcador, Jugador jugadorJ, JugadorIA jugadorIA, UI_Juego ui) { // pasamos los parametros necesarios para partida
+        this.tablero = new Tablero("|O|", ui);   
         this.marcador = marcador;
         this.jugadores = new Jugador[2]; //jugadores array de 2 posiciones
         this.jugadores[1] = jugadorJ;
         this.jugadores[0] = jugadorIA;
         this.turnoActual = (int)(Math.random() * 2);
         jugadorIA.setTablero(tablero);
+        this.ui = ui;
     }
 
     public int getTurnoActual() {
@@ -45,25 +46,18 @@ public class Partida {
 
     public void iniciar() { //Metodo que inicia la partida
         if (turnoActual % 2 == 1) {
-            System.out.println("****EMPIEZAS PRIMERO****");
-            System.out.println("-----------");
-            System.out.println("****Tus fichas son las X****");
-            System.out.println("-----------");
+            ui.warning("****EMPIEZAS PRIMERO****\n-----------\n****Tus fichas son las X****\n-----------");
         } else if (turnoActual % 2 == 0) {
-            System.out.println("****LA IA EMPIEZA PRIMERO****");
-            System.out.println("-----------");
-            System.out.println("****Sus fichas son los O****");
-            System.out.println("-----------");
+            ui.warning("****LA IA EMPIEZA PRIMERO****\n-----------\n****Sus fichas son los O****\n-----------");
         }
         if (turnoActual == 0){
-            System.out.print("");
+            ui.warning("");
         }
         jugar();
     }
 
-    private void salir() { //Método para salir de la partida.      
-        ui = new UI_Juego();
-        ui.actualizarUIMarcador(jugadores[1]);
+    private void salir() { //Método para salir de la partida.       
+        marcador.mostrar(jugadores[1]);
     }
 
     public boolean comprobarGanador(Jugador jugadorJ) { //Comprueba que jugador ha ganado; mirando las diagonales, verticales y horizontales. Despues de cada movimiento.       
@@ -107,52 +101,46 @@ public class Partida {
 
         boolean partidaFinalizada = false;
 
-        while (!partidaFinalizada) { 
+        while (!partidaFinalizada) {            
             if(turnoActual != 0){
-            System.out.println("Turno actual: " + turnoActual);
+            ui.estadoPartida(partidaFinalizada);   
+            ui.warning("Turno actual: " + this.getTurnoActual());
             tablero.mostrar();
-            System.out.println("-----------");
+            ui.warning("-----------");
             }
             p = this.jugadores[turnoActual % 2].movimiento(); //asi sabemos de quien es el turno, si el modulo es 1 le toca al jugador normal, si es 0 a la IA          
             if (tablero.validarMovimiento(p)) { //valida el movimiento
                 this.tablero.ponerFicha(p, this.jugadores[turnoActual % 2].getTipoFicha());  //segun de quien sea el turno pone X o O            
                 if (comprobarGanador(this.jugadores[turnoActual % 2])) { //Comprueba quien gana
                     if (turnoActual % 2 == 1) { //Si el turno es 1 y gana, se incrementa el marcador del jugador normal
-                        marcador.incrementarA();
+                        marcador.incrementarA();                      
                         tablero.mostrar();
-                        System.out.println("-----------");
-                        System.out.println("¡HAS GANADO!");
-                        System.out.println("-----------");
+                        ui.warning("-----------\n¡HAS GANADO!\n-----------");
                     } else {                        //Si el turno es 0 y gana, se incrementa el marcador del jugador normal
-                        marcador.incrementarB();
-                        tablero.mostrar();
-                        System.out.println("-----------");
-                        System.out.println("¡HAS PERDIDO!");
-                        System.out.println("-----------");
+                        marcador.incrementarB();                       
+                        tablero.mostrar();                      
+                        ui.warning("-----------\n¡HAS PERDIDO!\n-----------");
                     }
                     partidaFinalizada = true;
 /*enifvalidar*/ } else if (tablero.completo()) { //si se llena el tablero y no hay ganador es empate *********** 
                     partidaFinalizada = true;
-                    marcador.empatar();
-                    tablero.mostrar();
-                    System.out.println("-----------");
-                    System.out.println("¡EMPATE!");
-                    System.out.println("-----------");
+                    marcador.empatar();                   
+                    tablero.mostrar();                  
+                    ui.warning("-----------\n¡EMPATE!\n-----------");
                 }
                 incrementarTurno();        //si el movimiento es valido pasa al siguiente turno      
             } else { // si el movimento no es valido
                 if (turnoActual % 2 == 1) { //y es el turno de 1, se incrementa el marcador de la IA
-                    marcador.incrementarB();
-                    System.out.println("Movimiento no válido, ¡HAS PERDIDO!");
-                    System.out.println("-----------");
+                    marcador.incrementarB();                 
+                    ui.warning("Movimiento no válido, ¡HAS PERDIDO!\n-----------");
                 } else { //si es el turno de 0, se incrementa el marcador del jugador normal
-                    marcador.incrementarA();
-                    System.out.println("La IA ha hecho un movimiento no válido, ¡HAS GANADO!"); //en el caso de que la ia pueda poner encima de otra ficha
-                    System.out.println("-----------");
+                    marcador.incrementarA();                
+                    ui.warning("La IA ha hecho un movimiento no válido, ¡HAS GANADO!\n-----------");//en el caso de que la ia pueda poner encima de otra ficha          
                 }
                 partidaFinalizada = true;
             }
         }
+        ui.estadoPartida(partidaFinalizada);
         salir();
     }
 }

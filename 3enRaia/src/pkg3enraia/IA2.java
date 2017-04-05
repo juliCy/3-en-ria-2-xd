@@ -11,8 +11,8 @@ package pkg3enraia;
  */
 public class IA2 extends IA1 {
     
-    public IA2(String tipoFicha, String nombre) {      
-        super(tipoFicha, nombre);
+    public IA2(String tipoFicha, String nombre, UI_Juego ui) {      
+        super(tipoFicha, nombre, ui);
     }
 
     public IA2() {

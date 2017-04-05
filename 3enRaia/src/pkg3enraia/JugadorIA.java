@@ -13,8 +13,8 @@ public class JugadorIA extends Jugador {
     protected Tablero tablero;
     private Posicion p;
     
-    public JugadorIA(String tipoFicha, String nombre) {      
-        super(tipoFicha, nombre);
+    public JugadorIA(String tipoFicha, String nombre, UI_Juego ui) {      
+        super(tipoFicha, nombre, ui);
     }
 
     public JugadorIA() {
@@ -36,7 +36,7 @@ public class JugadorIA extends Jugador {
         this.tablero = tablero;
     }
     
-    @Override
+    
     public Posicion movimiento() { //IA pone ficha sobre la primera posicion libre del tablero      
         p = new Posicion();
         
@@ -52,12 +52,4 @@ public class JugadorIA extends Jugador {
         return null;
     }
 }   
- /*
-        int fila, columna;
-        fila = (int) (Math.random() * 3);
-        columna = (int) (Math.random() * 3);
-        System.out.println("IA Fila --> " + fila);
-        System.out.println("IA Columna --> " + columna);
-        System.out.println("-----------");
-        return new Posicion(fila, columna);
-    } */
+ 

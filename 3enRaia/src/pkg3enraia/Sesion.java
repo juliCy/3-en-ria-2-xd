@@ -5,8 +5,6 @@
  */
 package pkg3enraia;
 
-import java.util.Scanner;
-
 /**
  *
  * @author dam1a26
@@ -18,21 +16,71 @@ public class Sesion {
     private Jugador jugador;
     private JugadorIA jugadorIA;
     private UI_Juego ui;
-    
+
     public Sesion() {
-        ui = new UI_Juego();
+        ui = new GUI();
         iniciarSesion();
         iniciarMenu();
-        marcador = new Marcador();
-        partida = new Partida(marcador, jugador, jugadorIA);        
     }
-    
-    private void iniciarSesion(){
-        ui.iniciarUISesion();         
+
+    private void iniciarSesion() {
+        ui.warning("|| ES UN 3 EN RAYA CONTRA LA IA ||\n-----------");
+        marcador = new Marcador(ui);
+        ui.setMarcador(marcador);
+        ui.warning("Introduce el nombre del jugador: ");
+        jugador = new Jugador("|X|", ui.pedirNombre(), ui); // se pasan los parametros que hay en el constructor de jugador
+        ui.setJugador(jugador);
+        ui.warning("-----------");
     }
-    
-    public void iniciarMenu() {
-        ui.iniciarUIMenu();                    
+
+    private void iniciarMenu() {
+        boolean salir = false;
+        int select;
+        ui.warning("Introduce la opción deseada\n-----------\n1. Nivel ultrafácil\n2. Nivel menos fácil\n3. Nivel menos fácil que el anterior\n4. Nivel 'A ver si puedes ganar XD'\n5. Nivel '0 probabilidad'\n6. Salir");
+        select = ui.usarMenuUI();
+        switch (select) {
+            case 1:
+                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                jugadorIA = new JugadorIA("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
+                partida = new Partida(marcador, jugador, jugadorIA, ui);
+                partida.iniciar();
+                iniciarMenu();
+                break;
+            case 2:
+                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                jugadorIA = new IA1("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
+                partida = new Partida(marcador, jugador, jugadorIA, ui);
+                partida.iniciar();
+                iniciarMenu();
+                break;
+            case 3:
+                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                jugadorIA = new IA2("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
+                partida = new Partida(marcador, jugador, jugadorIA, ui);
+                partida.iniciar();
+                iniciarMenu();
+                break;
+            case 4:
+                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                jugadorIA = new IA3("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
+                partida = new Partida(marcador, jugador, jugadorIA, ui);
+                partida.iniciar();
+                iniciarMenu();
+                break;
+            case 5:
+                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                jugadorIA = new IA4("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
+                partida = new Partida(marcador, jugador, jugadorIA, ui);
+                partida.iniciar();
+                iniciarMenu();
+                break;
+            case 6:
+                salir = true;
+                break;
+            default:
+                ui.warning("-----------\nMira bien lo que escribes\n-----------");
+                iniciarMenu();
+                break;
+        }
     }
-    
 }

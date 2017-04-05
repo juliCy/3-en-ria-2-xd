@@ -10,12 +10,14 @@ import java.util.Scanner;
  * @author dam1a26
  */
 public class Jugador {
-    
-private String nombre,tipoFicha;
 
-    public Jugador(String tipoFicha, String nombre) { //parametros de jugador
+    private String nombre,tipoFicha;
+    private UI_Juego ui;
+
+    public Jugador(String tipoFicha, String nombre, UI_Juego ui) { //parametros de jugador
         this.tipoFicha = tipoFicha;
         this.nombre = nombre;
+        this.ui = ui;
     }
 
     public Jugador() {
@@ -30,15 +32,7 @@ private String nombre,tipoFicha;
     }
 
     public Posicion movimiento(){ //Jugador dice donde quiere mover
-        int fila, columna;
-        
-        Scanner sc = new Scanner(System.in);
-        System.out.println(getNombre()+" Fila -->");
-        fila = sc.nextInt(); //lee la consola
-        System.out.println(getNombre()+" Columna -->");       
-        columna = sc.nextInt();
-        System.out.println("-----------");        
-        return new Posicion(fila, columna);        
-    }
+        return ui.movimientoUI();
+    }     
     
 }

@@ -13,17 +13,16 @@ public class Tablero {
 
     private String casillas[][] = new String[3][3];
     private String tipoFicha;
+    private UI_Juego ui;
 
-    public Tablero(String tipoFicha) {
-        this.tipoFicha = tipoFicha;
-    }
-
-    public Tablero() { //imprime el tablero vacio en la pantalla.
+    public Tablero(String tipoFicha, UI_Juego ui) { //imprime el tablero vacio en la pantalla.
         for (int fila = 0; fila < 3; fila++) {
             for (int columna = 0; columna < 3; columna++) {
                 this.casillas[fila][columna] ="|-|";
             }
         }
+        this.tipoFicha = tipoFicha;
+        this.ui = ui;
     }
 
     public String[][] getCasillas() {
@@ -43,7 +42,7 @@ public class Tablero {
     }
 
     public void ponerFicha(Posicion p, String f) { //Indicar el lugar donde se colocará la ficha.
-        this.casillas[p.getFila()][p.getColumna()] = f;
+        ui.ponerFichaUI(f, p, this.casillas);
     }
 
     public boolean validarMovimiento(Posicion p) { //Metodo que valida si el sitio del tablero está vacío. 
@@ -55,6 +54,10 @@ public class Tablero {
 
     public String consultar(Posicion p) { //Devuelve la ficha que hay en una posicion
         return this.casillas[p.getFila()][p.getColumna()];
+    }
+    
+    public String consultar(int f, int c) { //Devuelve la ficha que hay en una posicion
+        return this.casillas[f][c];
     }
 
     public void mostrar() { //Mostrar el tablero por consola.
