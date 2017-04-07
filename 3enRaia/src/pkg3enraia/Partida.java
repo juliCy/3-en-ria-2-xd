@@ -46,9 +46,9 @@ public class Partida {
 
     public void iniciar() { //Metodo que inicia la partida
         if (turnoActual % 2 == 1) {
-            ui.warning("****EMPIEZAS PRIMERO****\n-----------\n****Tus fichas son las X****\n-----------");
+            ui.warning("****EMPIEZAS PRIMERO****\n****Tus fichas son las X****");
         } else if (turnoActual % 2 == 0) {
-            ui.warning("****LA IA EMPIEZA PRIMERO****\n-----------\n****Sus fichas son los O****\n-----------");
+            ui.warning("****LA IA EMPIEZA PRIMERO****\n****Sus fichas son los O****");
         }
         if (turnoActual == 0){
             ui.warning("");
@@ -115,27 +115,27 @@ public class Partida {
                     if (turnoActual % 2 == 1) { //Si el turno es 1 y gana, se incrementa el marcador del jugador normal
                         marcador.incrementarA();                      
                         tablero.mostrar();
-                        ui.warning("-----------\n¡HAS GANADO!\n-----------");
+                        ui.warning("¡HAS GANADO!");
                     } else {                        //Si el turno es 0 y gana, se incrementa el marcador del jugador normal
                         marcador.incrementarB();                       
                         tablero.mostrar();                      
-                        ui.warning("-----------\n¡HAS PERDIDO!\n-----------");
+                        ui.warning("¡HAS PERDIDO!");
                     }
                     partidaFinalizada = true;
 /*enifvalidar*/ } else if (tablero.completo()) { //si se llena el tablero y no hay ganador es empate *********** 
                     partidaFinalizada = true;
                     marcador.empatar();                   
                     tablero.mostrar();                  
-                    ui.warning("-----------\n¡EMPATE!\n-----------");
+                    ui.warning("¡EMPATE!");
                 }
                 incrementarTurno();        //si el movimiento es valido pasa al siguiente turno      
             } else { // si el movimento no es valido
                 if (turnoActual % 2 == 1) { //y es el turno de 1, se incrementa el marcador de la IA
                     marcador.incrementarB();                 
-                    ui.warning("Movimiento no válido, ¡HAS PERDIDO!\n-----------");
+                    ui.warning("Movimiento no válido, ¡HAS PERDIDO!");
                 } else { //si es el turno de 0, se incrementa el marcador del jugador normal
                     marcador.incrementarA();                
-                    ui.warning("La IA ha hecho un movimiento no válido, ¡HAS GANADO!\n-----------");//en el caso de que la ia pueda poner encima de otra ficha          
+                    ui.warning("La IA ha hecho un movimiento no válido, ¡HAS GANADO!");//en el caso de que la ia pueda poner encima de otra ficha          
                 }
                 partidaFinalizada = true;
             }

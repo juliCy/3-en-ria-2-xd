@@ -8,13 +8,17 @@ package pkg3enraia;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
  *
  * @author dam1a30
  */
-public class GUI extends UI_Juego {
+public class GUI extends UI_Juego implements ActionListener {
+    
     
     private JFrame frame;
     private JPanel panel1;
@@ -31,15 +35,19 @@ public class GUI extends UI_Juego {
     private JRadioButton d3;
     private JRadioButton d4;
     private JRadioButton d5;
-    
+    private JButton empezar;
+    private ButtonGroup group;
+    private Posicion buz;
 
-    public GUI() {
+    public GUI(Marcador marcador, Jugador jugador) {
+        super(marcador,jugador);
         //Frame------------------------
         frame = new JFrame("Tres en Raya");
         frame.setSize(900, 600);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setResizable(false);        
+        frame.setResizable(false);  
+        frame.setLayout(null);
         //Panel Tablero----------------
         panel1 = new JPanel(new GridLayout(3, 3));
         frame.add(panel1);
@@ -53,51 +61,52 @@ public class GUI extends UI_Juego {
         panel4 = new JPanel();
         panel4.setLayout(null);
         frame.add(panel4);
-        panel4.setBounds(550, 350, 280, 200);
+        panel4.setBounds(570, 350, 280, 200);
         //Panel Marcador---------------
         panel2 = new JPanel();
         panel2.setLayout(null);
         frame.add(panel2);
-        panel2.setBounds(600, 50, 200, 120);
+        panel2.setBounds(550, 100, 300, 120);
         panel2.setBackground(Color.red);
         //Label vic--------------------
-        vic = new JLabel("Victorias: ");
+        vic = new JLabel("Victorias jugador");
         panel2.add(vic);
-        vic.setBounds(20, 20, 70, 10);
+        vic.setBounds(20, 20, 150, 20);
         //Label derr-------------------
-        derr = new JLabel("Derrotas: ");
+        derr = new JLabel("Victorias IA");
         panel2.add(derr);
-        derr.setBounds(20, 50, 70, 10);
+        derr.setBounds(20, 50, 150, 20);
         //Label emp--------------------
-        emp = new JLabel("Empates: ");
+        emp = new JLabel("Empates");
         panel2.add(emp);
-        emp.setBounds(20, 80, 70, 10);
+        emp.setBounds(20, 80, 70, 20);
         //Label warning----------------
-        warning = new JLabel("Aqui van los warnings");
+        warning = new JLabel();
         panel3.add(warning);
-        warning.setBounds(70, 80, 150, 150);
+        warning.setBounds(100, 15, 200, 100);
         //Radio1-----------------------
-        d1 = new JRadioButton("Dificultad 1");
+        d1 = new JRadioButton("Muy Fácil");
         panel4.add(d1);
-        d1.setBounds(30, 10, 15, 15);
+        d1.setBounds(30, 10, 100, 15);
         //Radio2-----------------------
-        d2 = new JRadioButton("Dificultad 2");
+        d2 = new JRadioButton("Fácil");
         panel4.add(d2);
-        d2.setBounds(30, 50, 15, 15);
+        d2.setBounds(30, 50, 100, 15);
         //Radio3-----------------------
-        d3 = new JRadioButton("Dificultad 3");
+        d3 = new JRadioButton("Menos Fácil");
         panel4.add(d3);
-        d3.setBounds(30, 90, 15, 15);
+        d3.setBounds(30, 90, 100, 15);
         //Radio4-----------------------
-        d4 = new JRadioButton("Dificultad 4");
+        d4 = new JRadioButton("Medio");
         panel4.add(d4);
-        d4.setBounds(30, 130, 15, 15);
+        d4.setBounds(30, 130, 100, 15);
         //Radio5-----------------------
-        d5 = new JRadioButton("Dificultad 5");
+        d5 = new JRadioButton("Dificil");
         panel4.add(d5);
-        d5.setBounds(30, 170, 15, 15);
+        d5.setBounds(30, 170, 100, 15);
+        
         //Group the radio buttons.
-        ButtonGroup group = new ButtonGroup();
+        group = new ButtonGroup();
         group.add(d1);
         group.add(d2);
         group.add(d3);
@@ -106,15 +115,118 @@ public class GUI extends UI_Juego {
         //Botones------------------------
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-
-                botones[i][j] = new JButton();                //Instantiating buttons 
-                botones[i][j].setText("");
-                botones[i][j].setVisible(true);
-                botones[i][j].setSize(10, 10);
+                botones[i][j] = new JButton();                            
+                botones[i][j].setVisible(true);              
                 panel1.add(botones[i][j]);
+                botones[i][j].addActionListener(this);
+            }
+        } 
+        //Boton empezar-------------------
+        empezar = new JButton("Empezar");
+        panel4.add(empezar);
+        empezar.setBounds(140, 80, 100, 50);
+        empezar.addActionListener(this);
+        
+    }  
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int f, c;
+        JButton selectedBtn = (JButton) e.getSource();
+        for (f = 0; f < 3; f++) {
+            for (c = 0; c < 3; c++) {
+                if (botones[f][c] == selectedBtn) {
+                    this.buz = new Posicion();
+                    this.buz.setFila(f);
+                    this.buz.setColumna(c);
+                }
             }
         }
-    }  
-}
+        if(e.getSource() == empezar) {
+            
+        }
+    }
+    
+    /*private void resetTablero() {
+        int f, c;
+        for (f = 0; f < 3; f++) {
+            for (c = 0; c < 3; c++) {
+                botones[f][c].setText("");
+            }
+        }
+    }*/
+    
+    @Override
+    public void warning(String msg) {
+        warning.setText(msg);
+    }
+    
+    @Override
+    public String pedirNombre() { //pide el nombre del jugador normal
+        String nombre = JOptionPane.showInputDialog("Escribe tu nombre:");
+        return nombre;
+    }
+    
+    @Override
+    public int usarMenuUI() {
+        
+        //resetTablero();
+        if (d1.isSelected() == true && empezar.getModel().isPressed()) {
+            return 1;         
+        }
+        if (d2.isSelected() == true && empezar.getModel().isPressed()) {
+            return 2;         
+        }
+        if (d3.isSelected() == true && empezar.getModel().isPressed()) {
+            return 3;         
+        }
+        if (d4.isSelected() == true && empezar.getModel().isPressed()) {
+            return 4;         
+        }
+        if (d5.isSelected() == true && empezar.getModel().isPressed()) {
+            return 5;         
+        }
+        return 0;
+    }
+    
+    @Override
+    public void estadoPartida(boolean fin){
+        if(!fin){
+            warning.setText("En curso");
+        }else{
+            warning.setText("Finalizada");
+        }
+    }
+    
+    @Override
+    public void ponerFichaUI(String f, Posicion p, String c[][]) {
+        c[p.getFila()][p.getColumna()] = f;
+        botones[p.getFila()][p.getColumna()].setText(f);
 
-//http://codereview.stackexchange.com/questions/57141/tic-tac-toe-game-in-java-oop
+    }
+    
+    @Override
+    public void actualizarMarcadorUI(Jugador j) {
+        vic.setText("Victorias " + j.getNombre() + ": " + marcador.getVictoriasA());
+        derr.setText("Victorias IA: " + marcador.getVictoriasB());
+        emp.setText("Empates: " + marcador.getEmpate());
+    }
+    
+    @Override
+    public Posicion movimientoUI(){
+        Posicion p = new Posicion();
+        this.buz = null;
+        while (this.buz == null) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+
+        }
+        p.setFila(this.buz.getFila());
+        p.setColumna(this.buz.getColumna());
+        return p;
+    }
+}

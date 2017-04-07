@@ -13,10 +13,10 @@ import java.util.Scanner;
  */
 public class UI_Juego {
 
-    private Marcador marcador;
-    private Jugador jugador;
+    protected Marcador marcador;
+    protected Jugador jugador;
 
-    public UI_Juego() {
+    public UI_Juego(Marcador marcador, Jugador jugador) {
 
     }
 

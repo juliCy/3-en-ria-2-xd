@@ -18,13 +18,13 @@ public class Sesion {
     private UI_Juego ui;
 
     public Sesion() {
-        ui = new GUI();
+        ui = new GUI(marcador, jugador);
         iniciarSesion();
         iniciarMenu();
     }
 
     private void iniciarSesion() {
-        ui.warning("|| ES UN 3 EN RAYA CONTRA LA IA ||\n-----------");
+        ui.warning("|| ES UN 3 EN RAYA CONTRA LA IA ||");
         marcador = new Marcador(ui);
         ui.setMarcador(marcador);
         ui.warning("Introduce el nombre del jugador: ");
@@ -36,39 +36,39 @@ public class Sesion {
     private void iniciarMenu() {
         boolean salir = false;
         int select;
-        ui.warning("Introduce la opción deseada\n-----------\n1. Nivel ultrafácil\n2. Nivel menos fácil\n3. Nivel menos fácil que el anterior\n4. Nivel 'A ver si puedes ganar XD'\n5. Nivel '0 probabilidad'\n6. Salir");
+        ui.warning("Introduce la opción deseada                           \n-----------\n1. Nivel ultrafácil\n2. Nivel menos fácil\n3. Nivel menos fácil que el anterior\n4. Nivel 'A ver si puedes ganar XD'\n5. Nivel '0 probabilidad'\n6. Salir");
         select = ui.usarMenuUI();
         switch (select) {
             case 1:
-                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                ui.warning("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
                 jugadorIA = new JugadorIA("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
                 partida = new Partida(marcador, jugador, jugadorIA, ui);
                 partida.iniciar();
-                iniciarMenu();
+                iniciarMenu();            
                 break;
             case 2:
-                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                ui.warning("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
                 jugadorIA = new IA1("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
                 partida = new Partida(marcador, jugador, jugadorIA, ui);
                 partida.iniciar();
                 iniciarMenu();
                 break;
             case 3:
-                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                ui.warning("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
                 jugadorIA = new IA2("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
                 partida = new Partida(marcador, jugador, jugadorIA, ui);
                 partida.iniciar();
                 iniciarMenu();
                 break;
             case 4:
-                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                ui.warning("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
                 jugadorIA = new IA3("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
                 partida = new Partida(marcador, jugador, jugadorIA, ui);
                 partida.iniciar();
                 iniciarMenu();
                 break;
             case 5:
-                ui.warning("-----------\n****Las filas y columnas van desde la (0,0) hasta la (2,2)****\n-----------");
+                ui.warning("****Las filas y columnas van desde la (0,0) hasta la (2,2)****");
                 jugadorIA = new IA4("|O|", "IA", ui); // se pasan los parametros que hay en el constructor de jugador, nombre IA siempre igual
                 partida = new Partida(marcador, jugador, jugadorIA, ui);
                 partida.iniciar();
@@ -78,7 +78,7 @@ public class Sesion {
                 salir = true;
                 break;
             default:
-                ui.warning("-----------\nMira bien lo que escribes\n-----------");
+                ui.warning("Mira bien lo que escribes");
                 iniciarMenu();
                 break;
         }
