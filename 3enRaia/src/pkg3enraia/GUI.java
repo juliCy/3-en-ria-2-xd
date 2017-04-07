@@ -85,26 +85,35 @@ public class GUI extends UI_Juego implements ActionListener {
         panel3.add(warning);
         warning.setBounds(100, 15, 200, 100);
         //Radio1-----------------------
-        d1 = new JRadioButton("Muy Fácil");
+        d1 = new JRadioButton(Integer.toString(1));
+        d1.setText("Muy Fácil");
         panel4.add(d1);
         d1.setBounds(30, 10, 100, 15);
+        d1.addActionListener(this);
         //Radio2-----------------------
-        d2 = new JRadioButton("Fácil");
+        d2 = new JRadioButton(Integer.toString(2));
+        d2.setText("Fácil");
         panel4.add(d2);
         d2.setBounds(30, 50, 100, 15);
+        d2.addActionListener(this);
         //Radio3-----------------------
-        d3 = new JRadioButton("Menos Fácil");
+        d3 = new JRadioButton(Integer.toString(3));
         panel4.add(d3);
         d3.setBounds(30, 90, 100, 15);
+        d3.setText("Menos Fácil");
+        d3.addActionListener(this);
         //Radio4-----------------------
-        d4 = new JRadioButton("Medio");
+        d4 = new JRadioButton(Integer.toString(4));
+        d4.setText("Medio");
         panel4.add(d4);
         d4.setBounds(30, 130, 100, 15);
+        d4.addActionListener(this);
         //Radio5-----------------------
-        d5 = new JRadioButton("Dificil");
+        d5 = new JRadioButton(Integer.toString(5));
+        d5.setText("Difícil");
         panel4.add(d5);
         d5.setBounds(30, 170, 100, 15);
-        
+        d5.addActionListener(this);      
         //Group the radio buttons.
         group = new ButtonGroup();
         group.add(d1);
@@ -142,9 +151,7 @@ public class GUI extends UI_Juego implements ActionListener {
                 }
             }
         }
-        if(e.getSource() == empezar) {
-            
-        }
+        
     }
     
     /*private void resetTablero() {
@@ -171,22 +178,7 @@ public class GUI extends UI_Juego implements ActionListener {
     public int usarMenuUI() {
         
         //resetTablero();
-        if (d1.isSelected() == true && empezar.getModel().isPressed()) {
-            return 1;         
-        }
-        if (d2.isSelected() == true && empezar.getModel().isPressed()) {
-            return 2;         
-        }
-        if (d3.isSelected() == true && empezar.getModel().isPressed()) {
-            return 3;         
-        }
-        if (d4.isSelected() == true && empezar.getModel().isPressed()) {
-            return 4;         
-        }
-        if (d5.isSelected() == true && empezar.getModel().isPressed()) {
-            return 5;         
-        }
-        return 0;
+        return group.nextInt();
     }
     
     @Override
